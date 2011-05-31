@@ -71,7 +71,7 @@ import org.lwjgl.opencl.CLMem;
 import org.lwjgl.opencl.CLPlatform;
 import org.lwjgl.opencl.CLProgram;
 
-class DiabloMiner {
+public class DiabloMiner {
   final static int EXECUTION_TOTAL = 3;
   final static long TIME_OFFSET = 7500;
   final static int OUTPUTS = 256;
@@ -102,7 +102,7 @@ class DiabloMiner {
 
   String source;
 
-  boolean running = true;
+  volatile boolean running = true;
   Thread mainThread;
 
   List<DeviceState> deviceStates = new ArrayList<DeviceState>();
@@ -126,7 +126,7 @@ class DiabloMiner {
     diabloMiner.execute(args);
   }
 
-  void execute(String[] args) throws Exception {
+  public void execute(String[] args) throws Exception {
     mainThread = Thread.currentThread();
 
     String user = "diablo";
@@ -1237,4 +1237,12 @@ class DiabloMiner {
       }
     }
   }
+  
+  /**
+   * Stop DiabloMiner  
+   */
+  public void stop(){
+	  running = false;
+  }
+  
 }
